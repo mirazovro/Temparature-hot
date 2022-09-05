@@ -7,13 +7,33 @@ const loadTemparaute = city => {
 
     fetch(url)
         .then(res => res.json())
-        .then(data=>showTemp(data.main.temp))
+        .then(data => showTemp(data))
+
 }
 
-const showTemp = (temp) => {
-    // console.log(temp)
-    const currentTemp = document.getElementById('Temparature')
-    currentTemp.innerText = `${temp}`
-}
+const showTemp = (data) => {
+    // console.log(data.main.temp)
+    // const temparature = document.getElementById('Temparature');
+    // temparature.innerText = data.main.temp;
+    setInnerTextById('Temparature', data.main.temp)
+    setInnerTextById('condition',data.weather[0].main)
+    // console.log(data.weather[0].main)
+ }
+
+const setInnerTextById = (id, text)=>{
+    const temparature = document.getElementById(id);
+    temparature.innerText = text;
+ }
+
+document.getElementById('search-btn').addEventListener('click', function () {
+    //set temparature
+    const searchField = document.getElementById('search-text')
+    const city = searchField.value;
+    
+    // set cities
+    document.getElementById('cities').innerText = city;
+    loadTemparaute(city);
+    
+})
 
 loadTemparaute('dhaka')
